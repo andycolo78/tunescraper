@@ -8,7 +8,8 @@ tunescraper : get the list of new music releases from websites and lists links t
 
 
 def main(tune_scraper: Tunescraper) -> None:
-    pass
+    for release in tune_scraper.get_releases():
+        print(f"{release['name']} - {release['author']}")
 
 
 if __name__ == "__main__":

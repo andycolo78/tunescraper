@@ -23,12 +23,16 @@ class MainTest(unittest.TestCase):
             {'author': 'Ginger Root', 'name': 'SHINBANGUMI', 'type': 'album'}
         ]
 
+        expected_output = ''
+        for release in release_list:
+            expected_output += f"{release['name']} - {release['author']}\n"
+
         mocked_tunescraper = MagicMock()
         mocked_tunescraper.get_releases.return_value = release_list
 
         main(mocked_tunescraper)
 
-        printed_message = stdout.getvalue().strip()
+        printed_message = stdout.getvalue()
 
-        self.assertEqual(f"{file_length} bytes {filename}", printed_message)
+        self.assertEqual(expected_output, printed_message)
 
