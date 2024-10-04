@@ -1,13 +1,14 @@
 from App.page_scrapers.page_scraper import PageScraper
+from App.parsers.album_parser import AlbumParser
 
 
 class MockPagesScraper(PageScraper):
-    def __init__(self, page_content, albums):
-        self.page_content = page_content
+    def __init__(self, album_parser: AlbumParser, albums):
         self._albums = albums
+        self._page = None
 
     def set_page(self, page):
-        pass
+        self._page = page
 
     @property
     def albums(self):

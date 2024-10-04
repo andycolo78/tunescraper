@@ -7,6 +7,8 @@ import requests
 
 from unittest import mock
 from App.tunescraper import Tunescraper
+from App.page_scrapers.page_scraper import PageScraper
+from App.parsers.album_parser import AlbumParser
 
 
 def mocked_requests_get(*args, **kwargs):
@@ -20,28 +22,29 @@ class TunescraperTest(unittest.TestCase):
 
     @mock.patch('requests.get', side_effect=mocked_requests_get)
     def test_get_page_content(self, mock_get):
-        tunescraper = Tunescraper()
+        url = 'https://www.albumoftheyear.org/releases/this-week/'
+
+        tunescraper = Tunescraper(url, PageScraper(AlbumParser()))
 
         expected = '<html lang="en"><title>This Week\'s New Album Releases</title></html>'
 
-        url = 'https://www.albumoftheyear.org/releases/this-week/'
-        page = tunescraper._get_page_content(url)
+        page = tunescraper._get_page_content()
 
         self.assertEqual(expected, page)
 
     def test_get_albums_from_page(self):
-        with open('../Dataset/test_get_album_from_page.html', 'r') as file:
+        with open('../Dataset/test_get_albums_from_page.html', 'r') as file:
             page = file.read()
 
         expected_albums = [
-            {'author': 'Jamie xx', 'name': 'In Waves', 'type': 'album'},
-            {'author': 'Katy Perry', 'name': '143', 'type': 'album'},
-            {'author': 'Future', 'name': 'MIXTAPE PLUTO', 'type': 'album'},
-            {'author': 'The Voidz', 'name': 'Like All Before You', 'type': 'album'},
-            {'author': 'The Alchemist', 'name': 'The Genuine Articulate', 'type': 'album'}
+            {'author': 'Jamie xx', 'title': 'In Waves', 'type': 'album'},
+            {'author': 'Katy Perry', 'title': '143', 'type': 'album'},
+            {'author': 'Future', 'title': 'MIXTAPE PLUTO', 'type': 'album'},
+            {'author': 'The Voidz', 'title': 'Like All Before You', 'type': 'album'},
+            {'author': 'The Alchemist', 'title': 'The Genuine Articulate', 'type': 'album'}
         ]
 
-        tunescraper = Tunescraper(MockPagesScraper(page, expected_albums))
+        tunescraper = Tunescraper('http://someurl.com', MockPagesScraper(page, expected_albums))
         albums = tunescraper._get_albums_from_page(page)
 
         self.assertEqual(expected_albums, albums)

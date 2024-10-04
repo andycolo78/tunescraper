@@ -1,3 +1,4 @@
 class PageLocators:
-    pass
+    ALBUMS = 'div#centerContent div.wideLeft div.albumBlock'
+
 

@@ -1,6 +1,3 @@
-import io
-import os
-import sys
 import unittest
 from io import StringIO
 from unittest.mock import MagicMock, patch
@@ -17,15 +14,15 @@ class MainTest(unittest.TestCase):
     def test_main(self, stdout):
 
         release_list = [
-            {'author': 'Nilüfer Yanya', 'name': 'My Method Actor', 'type': 'album'},
-            {'author': 'julie', 'name': 'my anti-aircraft friend', 'type': 'album'},
-            {'author': 'Floating Points', 'name': 'Cascade', 'type': 'album'},
-            {'author': 'Ginger Root', 'name': 'SHINBANGUMI', 'type': 'album'}
+            {'author': 'Nilüfer Yanya', 'title': 'My Method Actor', 'type': 'album'},
+            {'author': 'julie', 'title': 'my anti-aircraft friend', 'type': 'album'},
+            {'author': 'Floating Points', 'title': 'Cascade', 'type': 'album'},
+            {'author': 'Ginger Root', 'title': 'SHINBANGUMI', 'type': 'album'}
         ]
 
         expected_output = ''
         for release in release_list:
-            expected_output += f"{release['name']} - {release['author']}\n"
+            expected_output += f"{release['title']} - {release['author']}\n"
 
         mocked_tunescraper = MagicMock()
         mocked_tunescraper.get_releases.return_value = release_list
