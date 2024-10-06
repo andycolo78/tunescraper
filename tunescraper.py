@@ -1,6 +1,7 @@
 from App.tunescraper import Tunescraper
 from App.page_scrapers.page_scraper import PageScraper
 from App.parsers.album_parser import AlbumParser
+from App.services.chromedriver_requests_client import ChromedriverRequestsClient
 
 from App.sites.aoty.aoty_config import AotyConfig
 
@@ -21,6 +22,6 @@ def get_url() -> str:
 
 
 if __name__ == "__main__":
-    main(Tunescraper(get_url(), PageScraper(AlbumParser())))
+    main(Tunescraper(get_url(), PageScraper(AlbumParser()), ChromedriverRequestsClient()))
 
 
