@@ -2,6 +2,7 @@ import unittest
 from unittest.mock import MagicMock
 from Test.Lib.mock_response import MockResponse
 from Test.Lib.mock_pages_scraper import MockPagesScraper
+from Test.Lib.mock_requests_client import MockRequestsClient
 
 import requests
 
@@ -20,19 +21,8 @@ def mocked_requests_get(*args, **kwargs):
 
 class TunescraperTest(unittest.TestCase):
 
-    @mock.patch('requests.get', side_effect=mocked_requests_get)
-    def test_get_page_content(self, mock_get):
+    def test_get_releases(self):
         url = 'https://www.albumoftheyear.org/releases/this-week/'
-
-        tunescraper = Tunescraper(url, PageScraper(AlbumParser()))
-
-        expected = '<html lang="en"><title>This Week\'s New Album Releases</title></html>'
-
-        page = tunescraper._get_page_content()
-
-        self.assertEqual(expected, page)
-
-    def test_get_albums_from_page(self):
         with open('../Dataset/test_get_albums_from_page.html', 'r') as file:
             page = file.read()
 
@@ -44,7 +34,7 @@ class TunescraperTest(unittest.TestCase):
             {'author': 'The Alchemist', 'title': 'The Genuine Articulate', 'type': 'album'}
         ]
 
-        tunescraper = Tunescraper('http://someurl.com', MockPagesScraper(page, expected_albums))
-        albums = tunescraper._get_albums_from_page(page)
+        tunescraper = Tunescraper(url, MockPagesScraper(AlbumParser(), expected_albums), MockRequestsClient(page))
+        albums = tunescraper.get_releases()
 
         self.assertEqual(expected_albums, albums)

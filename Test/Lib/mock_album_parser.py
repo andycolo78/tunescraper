@@ -2,10 +2,11 @@ import re
 
 from bs4 import BeautifulSoup
 
+from App.parsers.album_parser import AlbumParser
 from App.locators.album_locators import AlbumLocators
 
 
-class MockAlbumParser:
+class MockAlbumParser(AlbumParser):
     def __init__(self, mocked):
         self._album_section = None
         self._mocked = mocked
