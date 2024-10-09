@@ -2,6 +2,7 @@ import unittest
 from bs4 import BeautifulSoup
 
 from App.page_scrapers.page_scraper import PageScraper
+from App.parsers.album_parser import AlbumParser
 
 from Test.Lib.mock_album_parser import MockAlbumParser
 
@@ -43,4 +44,14 @@ class PageScraperTest(unittest.TestCase):
 
         self.assertEqual(expected_albums, albums)
 
+    def test_num_pages(self):
+        with open('../Dataset/test_get_albums_from_page.html', 'r') as file:
+            page = file.read()
 
+        expected_num_pages = 2
+
+        page_scraper = PageScraper(AlbumParser())
+        page_scraper.set_page(page)
+        num_pages = page_scraper.num_pages
+
+        self.assertEqual(expected_num_pages, num_pages)

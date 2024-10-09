@@ -11,8 +11,14 @@ class Tunescraper:
         self._requests_client = requests_client
 
     def get_releases(self) -> list:
-        albums = []
-        for num_page in range(1, self._get_total_pages()+1):
+        page_content = self._get_page_content(self._get_page_url(1))
+        albums = self._get_albums_from_page(page_content)
+        total_pages = self._get_total_pages(page_content)
+
+        if total_pages == 1:
+            return albums
+
+        for num_page in range(2, total_pages+1):
             page_content = self._get_page_content(self._get_page_url(num_page))
             albums = [*albums, *self._get_albums_from_page(page_content)]
         return albums
@@ -25,8 +31,9 @@ class Tunescraper:
         self._page_scraper.set_page(page)
         return self._page_scraper.albums
 
-    def _get_total_pages(self) -> int:
-        return 1
+    def _get_total_pages(self, page: str) -> int:
+        self._page_scraper.set_page(page)
+        return self._page_scraper.num_pages
 
     def _get_page_url(self, num_page: int) -> str:
         if num_page == 1:

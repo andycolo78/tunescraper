@@ -20,3 +20,10 @@ class PageScraper:
             albums.append(self._album_parser.album)
 
         return albums
+
+    @property
+    def num_pages(self):
+        last_page_element = self._soup.select_one(PageLocators.LAST_PAGE_NUMBER)
+        return int(last_page_element.text)
+
+
