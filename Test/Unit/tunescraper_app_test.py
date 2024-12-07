@@ -1,14 +1,9 @@
 import unittest
-from unittest.mock import MagicMock
 from Test.Lib.mock_response import MockResponse
 from Test.Lib.mock_pages_scraper import MockPagesScraper
 from Test.Lib.mock_requests_client import MockRequestsClient
 
-import requests
-
-from unittest import mock
-from App.tunescraper import Tunescraper
-from App.page_scrapers.page_scraper import PageScraper
+from App.tunescraper_app import TunescraperApp
 from App.parsers.album_parser import AlbumParser
 from App.services.requests_client import RequestsClient
 
@@ -20,7 +15,7 @@ def mocked_requests_get(*args, **kwargs):
     return MockResponse(None, 404)
 
 
-class TunescraperTest(unittest.TestCase):
+class TunescraperAppTest(unittest.TestCase):
 
     def test_get_releases(self):
         url = 'https://www.albumoftheyear.org/releases/this-week/'
@@ -43,7 +38,7 @@ class TunescraperTest(unittest.TestCase):
             {'author': 'Lower Mars', 'title': '>Axel Stallion', 'type': 'album'}
         ]
 
-        tunescraper = Tunescraper(url, MockPagesScraper(AlbumParser(), expected_albums), MockRequestsClient(pages))
+        tunescraper = TunescraperApp(url, MockPagesScraper(AlbumParser(), expected_albums), MockRequestsClient(pages))
         albums = tunescraper.get_releases()
 
         self.assertEqual(expected_albums, albums)
@@ -55,7 +50,7 @@ class TunescraperTest(unittest.TestCase):
 
         expected_num_pages = 2
 
-        tunescraper = Tunescraper(url,  MockPagesScraper(AlbumParser(), num_pages=expected_num_pages), RequestsClient())
+        tunescraper = TunescraperApp(url,  MockPagesScraper(AlbumParser(), num_pages=expected_num_pages), RequestsClient())
         num_pages = tunescraper._get_total_pages(page)
 
         self.assertEqual(expected_num_pages, num_pages)

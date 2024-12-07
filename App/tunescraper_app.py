@@ -1,10 +1,8 @@
-import undetected_chromedriver as uc
-
 from App.page_scrapers.page_scraper import PageScraper
 from App.services.requests_client import RequestsClient
 
 
-class Tunescraper:
+class TunescraperApp:
     def __init__(self, url: str, page_scraper: PageScraper, requests_client: RequestsClient):
         self._page_scraper = page_scraper
         self._url = url

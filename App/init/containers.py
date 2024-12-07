@@ -1,6 +1,6 @@
 from dependency_injector import containers, providers
 
-from App.tunescraper import Tunescraper
+from App.tunescraper_app import TunescraperApp
 from App.page_scrapers.page_scraper import PageScraper
 from App.parsers.album_parser import AlbumParser
 
@@ -27,7 +27,7 @@ class ScraperContainer(containers.DeclarativeContainer):
     )
 
     tune_scraper = providers.Factory(
-        Tunescraper,
+        TunescraperApp,
         AotyConfig.URL,
         page_scraper,
         request_client
