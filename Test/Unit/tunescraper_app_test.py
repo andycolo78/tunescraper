@@ -4,7 +4,7 @@ from Test.Lib.mock_pages_scraper import MockPagesScraper
 from Test.Lib.mock_requests_client import MockRequestsClient
 
 from App.tunescraper_app import TunescraperApp
-from App.parsers.album_parser import AlbumParser
+from App.parsers.release_parser import ReleaseParser
 from App.services.requests_client import RequestsClient
 
 
@@ -19,16 +19,16 @@ class TunescraperAppTest(unittest.TestCase):
 
     def test_get_releases(self):
         url = 'https://www.albumoftheyear.org/releases/this-week/'
-        with open('../Dataset/test_get_albums_from_page.html', 'r') as file:
+        with open('../Dataset/test_get_releases_from_page.html', 'r') as file:
             page = file.read()
 
         url_2 = 'https://www.albumoftheyear.org/releases/this-week/2/'
-        with open('../Dataset/test_get_albums_from_page_2.html', 'r') as file:
+        with open('../Dataset/test_get_releases_from_page_2.html', 'r') as file:
             page_2 = file.read()
 
         pages = {url: page, url_2: page_2}
 
-        expected_albums = [
+        expected_releases = [
             {'author': 'Jamie xx', 'title': 'In Waves', 'type': 'album'},
             {'author': 'Katy Perry', 'title': '143', 'type': 'album'},
             {'author': 'Future', 'title': 'MIXTAPE PLUTO', 'type': 'album'},
@@ -38,19 +38,19 @@ class TunescraperAppTest(unittest.TestCase):
             {'author': 'Lower Mars', 'title': '>Axel Stallion', 'type': 'album'}
         ]
 
-        tunescraper = TunescraperApp(url, MockPagesScraper(AlbumParser(), expected_albums), MockRequestsClient(pages))
-        albums = tunescraper.get_releases()
+        tunescraper = TunescraperApp(url, MockPagesScraper(ReleaseParser(), expected_releases), MockRequestsClient(pages))
+        releases = tunescraper.get_releases()
 
-        self.assertEqual(expected_albums, albums)
+        self.assertEqual(expected_releases, releases)
 
     def test_get_total_pages(self):
         url = 'https://www.albumoftheyear.org/releases/this-week/'
-        with open('../Dataset/test_get_albums_from_page.html', 'r') as file:
+        with open('../Dataset/test_get_releases_from_page.html', 'r') as file:
             page = file.read()
 
         expected_num_pages = 2
 
-        tunescraper = TunescraperApp(url,  MockPagesScraper(AlbumParser(), num_pages=expected_num_pages), RequestsClient())
+        tunescraper = TunescraperApp(url,  MockPagesScraper(ReleaseParser(), num_pages=expected_num_pages), RequestsClient())
         num_pages = tunescraper._get_total_pages(page)
 
         self.assertEqual(expected_num_pages, num_pages)

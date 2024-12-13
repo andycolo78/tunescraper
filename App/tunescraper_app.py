@@ -1,5 +1,6 @@
 from App.page_scrapers.page_scraper import PageScraper
 from App.services.requests_client import RequestsClient
+from App.data.release import Release
 
 
 class TunescraperApp:
@@ -8,26 +9,26 @@ class TunescraperApp:
         self._url = url
         self._requests_client = requests_client
 
-    def get_releases(self) -> list:
+    def get_releases(self) -> list[Release]:
         page_content = self._get_page_content(self._get_page_url(1))
-        albums = self._get_albums_from_page(page_content)
+        releases = self._get_releases_from_page(page_content)
         total_pages = self._get_total_pages(page_content)
 
         if total_pages == 1:
-            return albums
+            return releases
 
         for num_page in range(2, total_pages+1):
             page_content = self._get_page_content(self._get_page_url(num_page))
-            albums = [*albums, *self._get_albums_from_page(page_content)]
-        return albums
+            releases = [*releases, *self._get_releases_from_page(page_content)]
+        return releases
 
     def _get_page_content(self, url: str) -> str:
         page_content = self._requests_client.get(url)
         return page_content
 
-    def _get_albums_from_page(self, page) -> list:
+    def _get_releases_from_page(self, page) -> list[Release]:
         self._page_scraper.set_page(page)
-        return self._page_scraper.albums
+        return self._page_scraper.releases
 
     def _get_total_pages(self, page: str) -> int:
         self._page_scraper.set_page(page)

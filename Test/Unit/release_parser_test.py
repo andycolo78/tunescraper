@@ -3,15 +3,16 @@ import unittest
 from bs4 import BeautifulSoup
 
 from App.locators.page_locators import PageLocators
-from App.parsers.album_parser import AlbumParser
+from App.parsers.release_parser import ReleaseParser
+from App.data.release import Release
 
 
-class AlbumParserTest(unittest.TestCase):
-    def test_album(self):
+class ReleaseParserTest(unittest.TestCase):
+    def test_release(self):
 
-        expected_album = {'author': 'Jamie xx', 'title': 'In Waves', 'type': 'album'}
+        expected_release = Release(author='Jamie xx', title='In Waves')
 
-        album_section = '''<div id="centerContent">
+        release_section = '''<div id="centerContent">
 <div class="flexContainer">
     <div class="wideLeft">
     <div class="albumBlock five small" data-type>
@@ -26,10 +27,10 @@ class AlbumParserTest(unittest.TestCase):
 <div class="ratingRowContainer">
 </div></div></div></div></div>'''
 
-        soup = BeautifulSoup(album_section, 'html.parser')
-        album_section = soup.select_one(PageLocators.ALBUMS)
+        soup = BeautifulSoup(release_section, 'html.parser')
+        release_section = soup.select_one(PageLocators.RELEASES)
 
-        album_parser = AlbumParser()
-        album_parser.set_album_section(album_section)
+        release_parser = ReleaseParser()
+        release_parser.set_release_section(release_section)
 
-        self.assertEqual(expected_album, album_parser.album)
+        self.assertEqual(expected_release, release_parser.release)

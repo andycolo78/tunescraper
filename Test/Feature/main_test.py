@@ -1,6 +1,7 @@
 import unittest
 from io import StringIO
 from unittest.mock import MagicMock, patch
+from App.data.release import Release
 
 from tunescraper import main
 
@@ -12,17 +13,17 @@ class MainTest(unittest.TestCase):
 
     @patch('sys.stdout', new_callable=StringIO)
     def test_main(self, stdout):
-
         release_list = [
-            {'author': 'Nilüfer Yanya', 'title': 'My Method Actor', 'type': 'album'},
-            {'author': 'julie', 'title': 'my anti-aircraft friend', 'type': 'album'},
-            {'author': 'Floating Points', 'title': 'Cascade', 'type': 'album'},
-            {'author': 'Ginger Root', 'title': 'SHINBANGUMI', 'type': 'album'}
+            Release(author='Nilüfer Yanya', title='My Method Actor', type='album'),
+            Release(author='julie', title='my anti-aircraft friend', type='album'),
+            Release(author='Floating Points', title='Cascade', type='album'),
+            Release(author='Ginger Root', title='SHINBANGUMI', type='album')
         ]
 
-        expected_output = ''
+        exp_out = ''
         for release in release_list:
-            expected_output += f"{release['title']} - {release['author']}\n"
+            exp_out += (f"{release.title[:45] + "..." if len(release.title) > 45 else release.title:-<50} " +
+                        f"{release.author:<20}\n")
 
         mocked_tunescraper = MagicMock()
         mocked_tunescraper.get_releases.return_value = release_list
@@ -31,5 +32,4 @@ class MainTest(unittest.TestCase):
 
         printed_message = stdout.getvalue()
 
-        self.assertEqual(expected_output, printed_message)
-
+        self.assertEqual(exp_out, printed_message)

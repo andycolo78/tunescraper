@@ -2,27 +2,27 @@ import unittest
 from bs4 import BeautifulSoup
 
 from App.page_scrapers.page_scraper import PageScraper
-from App.parsers.album_parser import AlbumParser
+from App.parsers.release_parser import ReleaseParser
 
-from Test.Lib.mock_album_parser import MockAlbumParser
+from Test.Lib.mock_release_parser import MockReleaseParser
 
 
 class PageScraperTest(unittest.TestCase):
 
     def test_set_page(self):
-        with open('../Dataset/test_get_albums_from_page.html', 'r') as file:
+        with open('../Dataset/test_get_releases_from_page.html', 'r') as file:
             page = file.read()
 
-        page_scraper = PageScraper(MockAlbumParser())
+        page_scraper = PageScraper(MockReleaseParser({}))
         page_scraper.set_page(page)
 
         self.assertIsInstance(page_scraper._soup, BeautifulSoup)
 
     def test_albums(self):
-        with open('../Dataset/test_get_albums_from_page.html', 'r') as file:
+        with open('../Dataset/test_get_releases_from_page.html', 'r') as file:
             page = file.read()
 
-        expected_albums = [
+        expected_releases = [
             {'author': 'Jamie xx', 'title': 'In Waves', 'type': 'album'},
             {'author': 'Katy Perry', 'title': '143', 'type': 'album'},
             {'author': 'Future', 'title': 'MIXTAPE PLUTO', 'type': 'album'},
@@ -30,7 +30,7 @@ class PageScraperTest(unittest.TestCase):
             {'author': 'The Alchemist', 'title': 'The Genuine Articulate', 'type': 'album'}
         ]
 
-        mocked_albums = {
+        mocked_releases = {
             'In Waves': {'author': 'Jamie xx', 'title': 'In Waves', 'type': 'album'},
             '143': {'author': 'Katy Perry', 'title': '143', 'type': 'album'},
             'MIXTAPE PLUTO': {'author': 'Future', 'title': 'MIXTAPE PLUTO', 'type': 'album'},
@@ -38,19 +38,19 @@ class PageScraperTest(unittest.TestCase):
             'The Genuine Articulate': {'author': 'The Alchemist', 'title': 'The Genuine Articulate', 'type': 'album'}
         }
 
-        page_scraper = PageScraper(MockAlbumParser(mocked_albums))
+        page_scraper = PageScraper(MockReleaseParser(mocked_releases))
         page_scraper.set_page(page)
-        albums = page_scraper.albums
+        releases = page_scraper.releases
 
-        self.assertEqual(expected_albums, albums)
+        self.assertEqual(expected_releases, releases)
 
     def test_num_pages(self):
-        with open('../Dataset/test_get_albums_from_page.html', 'r') as file:
+        with open('../Dataset/test_get_releases_from_page.html', 'r') as file:
             page = file.read()
 
         expected_num_pages = 2
 
-        page_scraper = PageScraper(AlbumParser())
+        page_scraper = PageScraper(MockReleaseParser({}))
         page_scraper.set_page(page)
         num_pages = page_scraper.num_pages
 

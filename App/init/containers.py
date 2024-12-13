@@ -2,7 +2,7 @@ from dependency_injector import containers, providers
 
 from App.tunescraper_app import TunescraperApp
 from App.page_scrapers.page_scraper import PageScraper
-from App.parsers.album_parser import AlbumParser
+from App.parsers.release_parser import ReleaseParser
 
 from App.sites.aoty.aoty_config import AotyConfig
 
@@ -13,13 +13,13 @@ class ScraperContainer(containers.DeclarativeContainer):
 
     config = providers.Configuration()
 
-    album_parser = providers.Singleton(
-        AlbumParser
+    release_parser = providers.Singleton(
+        ReleaseParser
     )
 
     page_scraper = providers.Singleton(
         PageScraper,
-        album_parser
+        release_parser
     )
 
     request_client = providers.Singleton(

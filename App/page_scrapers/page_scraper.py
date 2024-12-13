@@ -1,25 +1,25 @@
 from bs4 import BeautifulSoup
 
 from App.locators.page_locators import PageLocators
-from App.parsers.album_parser import AlbumParser
+from App.parsers.release_parser import ReleaseParser
 
 
 class PageScraper:
-    def __init__(self, album_parser: AlbumParser):
+    def __init__(self, release_parser: ReleaseParser):
         self._soup = None
-        self._album_parser = album_parser
+        self._release_parser = release_parser
 
     def set_page(self, page: str) -> None:
         self._soup = BeautifulSoup(page, 'html.parser')
 
     @property
-    def albums(self):
-        albums = []
-        for album_section in self._soup.select(PageLocators.ALBUMS):
-            self._album_parser.set_album_section(album_section)
-            albums.append(self._album_parser.album)
+    def releases(self):
+        releases = []
+        for release_section in self._soup.select(PageLocators.RELEASES):
+            self._release_parser.set_release_section(release_section)
+            releases.append(self._release_parser.release)
 
-        return albums
+        return releases
 
     @property
     def num_pages(self):
