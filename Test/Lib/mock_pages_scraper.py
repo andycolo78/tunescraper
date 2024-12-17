@@ -1,4 +1,3 @@
-from App.page_scrapers.page_scraper import PageScraper
 from App.parsers.release_parser import ReleaseParser
 
 

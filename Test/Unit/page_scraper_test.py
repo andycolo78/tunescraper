@@ -1,6 +1,7 @@
 import unittest
 from bs4 import BeautifulSoup
 
+from App.data.release import Release
 from App.page_scrapers.page_scraper import PageScraper
 from App.parsers.release_parser import ReleaseParser
 
@@ -18,24 +19,24 @@ class PageScraperTest(unittest.TestCase):
 
         self.assertIsInstance(page_scraper._soup, BeautifulSoup)
 
-    def test_albums(self):
+    def test_releases(self):
         with open('../Dataset/test_get_releases_from_page.html', 'r') as file:
             page = file.read()
 
         expected_releases = [
-            {'author': 'Jamie xx', 'title': 'In Waves', 'type': 'album'},
-            {'author': 'Katy Perry', 'title': '143', 'type': 'album'},
-            {'author': 'Future', 'title': 'MIXTAPE PLUTO', 'type': 'album'},
-            {'author': 'The Voidz', 'title': 'Like All Before You', 'type': 'album'},
-            {'author': 'The Alchemist', 'title': 'The Genuine Articulate', 'type': 'album'}
+            Release(author='Jamie xx', title='In Waves', type='album'),
+            Release(author='Katy Perry', title='143', type='album'),
+            Release(author='Future', title='MIXTAPE PLUTO', type='album'),
+            Release(author='The Voidz', title='Like All Before You', type='album'),
+            Release(author='The Alchemist', title='The Genuine Articulate', type='album')
         ]
 
         mocked_releases = {
-            'In Waves': {'author': 'Jamie xx', 'title': 'In Waves', 'type': 'album'},
-            '143': {'author': 'Katy Perry', 'title': '143', 'type': 'album'},
-            'MIXTAPE PLUTO': {'author': 'Future', 'title': 'MIXTAPE PLUTO', 'type': 'album'},
-            'Like All Before You': {'author': 'The Voidz', 'title': 'Like All Before You', 'type': 'album'},
-            'The Genuine Articulate': {'author': 'The Alchemist', 'title': 'The Genuine Articulate', 'type': 'album'}
+            'In Waves': Release(author='Jamie xx', title='In Waves', type='album'),
+            '143': Release(author='Katy Perry', title='143', type='album'),
+            'MIXTAPE PLUTO': Release(author='Future', title='MIXTAPE PLUTO', type='album'),
+            'Like All Before You': Release(author='The Voidz', title='Like All Before You', type='album'),
+            'The Genuine Articulate': Release(author='The Alchemist', title='The Genuine Articulate', type='album')
         }
 
         page_scraper = PageScraper(MockReleaseParser(mocked_releases))

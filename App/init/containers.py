@@ -3,6 +3,7 @@ from dependency_injector import containers, providers
 from App.tunescraper_app import TunescraperApp
 from App.page_scrapers.page_scraper import PageScraper
 from App.parsers.release_parser import ReleaseParser
+from App.repositories.releases_repository import ReleasesRepository
 
 from App.sites.aoty.aoty_config import AotyConfig
 
@@ -26,10 +27,15 @@ class ScraperContainer(containers.DeclarativeContainer):
         ChromedriverRequestsClient
     )
 
-    tune_scraper = providers.Factory(
-        TunescraperApp,
+    releases_repository = providers.Singleton(
+        ReleasesRepository,
         AotyConfig.URL,
         page_scraper,
         request_client
+    )
+
+    tune_scraper = providers.Factory(
+        TunescraperApp,
+        releases_repository
     )
 
