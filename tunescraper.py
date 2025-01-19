@@ -13,7 +13,10 @@ tunescraper : get the list of new music releases from websites and lists links t
 def main(tune_scraper: TunescraperApp = Provide[ScraperContainer.tune_scraper]) -> None:
     for release in tune_scraper.get_releases():
         print(f"{release.title[:45] + "..." if len(release.title) > 45 else release.title:-<50} "
-              f"{release.author:<20}")
+              f"{release.author[:40] + "..." if len(release.author) > 40 else release.author:-<50} "
+              f"{release.url:<20}"
+              f"{release.genres}"
+              )
 
 
 if __name__ == "__main__":

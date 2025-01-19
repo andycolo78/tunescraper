@@ -41,7 +41,10 @@ class ReleasesRepositoryTest(unittest.TestCase):
         aoty_releases_repository = ReleasesRepository(url, MockPagesScraper(ReleaseParser(), expected_releases), MockRequestsClient(pages))
         releases = aoty_releases_repository.fetch_releases()
 
-        self.assertEqual(expected_releases, releases)
+        self.assertEqual(
+            [release.__dict__ for release in expected_releases],
+            [release.__dict__ for release in releases]
+        )
 
     def test_get_total_pages(self):
         url = 'https://www.albumoftheyear.org/releases/this-week/'

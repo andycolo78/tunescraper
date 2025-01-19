@@ -5,7 +5,11 @@ List new music releases scraped from websites
 
 ## Usage example
 
-## Development setup
+## Setup
+.env file must be present in root folder with the following variable. 
+Check committed .env_example for the variables.
+Spotify app credentials can be obtained from [Spotify developer's site](https://developer.spotify.com/documentation/web-api/concepts/apps)
+
 
 ## Project milestones
 * 1.0 : get a list of released albums from last week release page of [albumoftheyear.org](https://www.albumoftheyear.org/releases/this-week/)
