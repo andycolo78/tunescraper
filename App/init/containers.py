@@ -1,5 +1,7 @@
 from dependency_injector import containers, providers
 
+from App.init.config import Config
+
 from App.tunescraper_app import TunescraperApp
 from App.page_scrapers.page_scraper import PageScraper
 from App.parsers.release_parser import ReleaseParser
@@ -13,12 +15,6 @@ from App.services.spotify_metadata_client import SpotifyMetadataClient
 
 from spotipy import Spotify
 from spotipy.oauth2 import SpotifyClientCredentials
-
-from dotenv import load_dotenv
-import os
-
-# Load environment variables from the .env file
-load_dotenv()
 
 
 class ScraperContainer(containers.DeclarativeContainer):
@@ -46,8 +42,8 @@ class ScraperContainer(containers.DeclarativeContainer):
 
     metadata_client = providers.Singleton(
         SpotifyMetadataClient,
-        Spotify(auth_manager=SpotifyClientCredentials(client_id=os.getenv("SPOTIFY_CLIENT_ID"),
-                                                      client_secret=os.getenv("SPOTIFY_CLIENT_SECRET"))
+        Spotify(auth_manager=SpotifyClientCredentials(client_id=Config.SPOTIFY_CLIENT_ID,
+                                                      client_secret=Config.SPOTIFY_CLIENT_SECRET)
                 )
     )
 

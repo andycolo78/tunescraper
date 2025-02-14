@@ -1,7 +1,11 @@
+import time
 import urllib.parse
+import re
 
 from App.data.release import Release
 from App.services.metadata_client import MetadataClient
+from App.exceptions.album_not_found_exception import AlbumNotFoundException
+from App.exceptions.artist_not_found_exception import ArtistNotFoundException
 
 
 class MetadataRepository:
@@ -14,22 +18,23 @@ class MetadataRepository:
             release.url = metadata[0]
             release.genres = metadata[1]
             releases[idx] = release
+            time.sleep(1)
         return releases
 
     def _fetch_metadata(self, release: Release) -> tuple:
-        # title = urllib.parse.quote(release.title)
-        # author = urllib.parse.quote(release.author)
-        #
-        # release_metadata = self._metadata_client.search(
-        #     q=f'{title}artist:{author}', limit=1, type='album')
-        # artist_metadata = self._metadata_client.search(q=author, limit=1, type='artist')
+        try:
+            unicode_title = re.sub(r'[^\x20-\x7E]', '', release.title)
+            unicode_author = re.sub(r'[^\x20-\x7E]', '', release.author)
 
-        release_metadata = self._metadata_client.search_album(release.title, release.author)
-        artist_metadata = self._metadata_client.search_artist(release.author)
+            release_metadata = self._metadata_client.search_album(unicode_title, unicode_author)
+            artist_metadata = self._metadata_client.search_artist(unicode_author)
 
-        return (
-            release_metadata['external_urls']['spotify'] if release_metadata['external_urls'] else '',
-            artist_metadata['genres'] if artist_metadata else []
-        )
+            return (
+                release_metadata['external_urls']['spotify'] if release_metadata['external_urls'] else '',
+                artist_metadata['genres'] if artist_metadata else []
+            )
+
+        except (AlbumNotFoundException, ArtistNotFoundException):
+            return '', []
 
 

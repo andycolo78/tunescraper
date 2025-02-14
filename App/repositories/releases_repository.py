@@ -19,7 +19,8 @@ class ReleasesRepository:
 
         for num_page in range(2, total_pages + 1):
             page_content = self._get_page_content(self._get_page_url(num_page))
-            releases = [*releases, *self._get_releases_from_page(page_content)]
+            releases = list({(release.title, release.author): release for
+                             release in [*releases, *self._get_releases_from_page(page_content)]}.values())
         return releases
 
     def _get_page_content(self, url: str) -> str:
