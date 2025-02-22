@@ -1,0 +1,7 @@
+spotipy
+beautifulsoup4
+dependency_injector
+dotenv
+undetected_chromedriver
+setuptools
+ 
