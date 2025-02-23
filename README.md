@@ -21,12 +21,13 @@ python tunescraper.py
 
 
 ## Project milestones
-* 1.0 : get a list of released albums from last week release page of [albumoftheyear.org](https://www.albumoftheyear.org/releases/this-week/)
-  * List album title and author
-  * From the release of same date or first date before 
-* 2.0 : for each album of the release and for each artist provide a link to spotify page 
-* 3.0 : use data from spotify to implement filter based on album's genre
-* 4.0 : implement GUI (tbd local app o website)
+* 1.0 : 
+  * get a list of released albums from last week release page of [albumoftheyear.org](https://www.albumoftheyear.org/releases/this-week/)
+  * for each album of the release and for each artist provide a link to spotify page
+  * every album is catalogued under one or more generes according to artist's
+  * print a list of found albums with spotify link and generes
+* 2.0 :
+  * store found albums and metadata to DB
 
 
 
