@@ -1,7 +1,8 @@
 from App.data.release import Release
+from App.init.config import Config
 from App.page_scrapers.page_scraper import PageScraper
 from App.services.requests_client import RequestsClient
-
+from App.helpers.progress_bar import ProgressBar
 
 class ReleasesRepository:
     def __init__(self, url: str, page_scraper: PageScraper, requests_client: RequestsClient):
@@ -17,7 +18,9 @@ class ReleasesRepository:
         if total_pages == 1:
             return releases
 
+        print(f'Fetch {total_pages} pages')
         for num_page in range(2, total_pages + 1):
+            ProgressBar.print(num_page, total_pages)
             page_content = self._get_page_content(self._get_page_url(num_page))
             releases = list({(release.title, release.author): release for
                              release in [*releases, *self._get_releases_from_page(page_content)]}.values())
@@ -32,6 +35,9 @@ class ReleasesRepository:
         return self._page_scraper.releases
 
     def _get_total_pages(self, page: str) -> int:
+        if Config.DEV_ENABLE:
+            return 3
+
         self._page_scraper.set_page(page)
         return self._page_scraper.num_pages
 

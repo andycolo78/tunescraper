@@ -1,5 +1,7 @@
 from bs4 import BeautifulSoup
 
+from App.init.config import Config
+
 from App.locators.page_locators import PageLocators
 from App.parsers.release_parser import ReleaseParser
 

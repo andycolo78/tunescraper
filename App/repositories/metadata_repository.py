@@ -3,6 +3,7 @@ import urllib.parse
 import re
 
 from App.data.release import Release
+from App.helpers.progress_bar import ProgressBar
 from App.services.metadata_client import MetadataClient
 from App.exceptions.album_not_found_exception import AlbumNotFoundException
 from App.exceptions.artist_not_found_exception import ArtistNotFoundException
@@ -13,7 +14,10 @@ class MetadataRepository:
         self._metadata_client = metadata_client
 
     def add_metadata(self, releases: list[Release]) -> list[Release]:
+
+        print(f'Fetch metadata for {len(releases)} albums')
         for idx, release in enumerate(releases):
+            ProgressBar.print(idx, len(releases))
             metadata = self._fetch_metadata(release)
             release.url = metadata[0]
             release.genres = metadata[1]

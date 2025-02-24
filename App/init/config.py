@@ -14,4 +14,5 @@ class Config:
     SPOTIFY_CLIENT_ID = os.getenv("SPOTIFY_CLIENT_ID")
     SPOTIFY_CLIENT_SECRET = os.getenv("SPOTIFY_CLIENT_SECRET")
     LOG_LEVEL = os.getenv("LOG_LEVEL")
+    DEV_ENABLE = os.getenv("DEV_ENABLE")
 
