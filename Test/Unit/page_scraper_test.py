@@ -1,3 +1,4 @@
+import os
 import unittest
 from bs4 import BeautifulSoup
 
@@ -11,7 +12,8 @@ from Test.Lib.mock_release_parser import MockReleaseParser
 class PageScraperTest(unittest.TestCase):
 
     def test_set_page(self):
-        with open('../Dataset/test_get_releases_from_page.html', 'r') as file:
+        file_path = os.path.join(os.getcwd(), "..", "Dataset", "test_get_releases_from_page.html")
+        with open(file_path, 'r') as file:
             page = file.read()
 
         page_scraper = PageScraper(MockReleaseParser({}))
@@ -20,7 +22,8 @@ class PageScraperTest(unittest.TestCase):
         self.assertIsInstance(page_scraper._soup, BeautifulSoup)
 
     def test_releases(self):
-        with open('../Dataset/test_get_releases_from_page.html', 'r') as file:
+        file_path = os.path.join(os.getcwd(), "..", "Dataset", "test_get_releases_from_page.html")
+        with open(file_path, 'r') as file:
             page = file.read()
 
         expected_releases = [
@@ -46,7 +49,8 @@ class PageScraperTest(unittest.TestCase):
         self.assertEqual(expected_releases, releases)
 
     def test_num_pages(self):
-        with open('../Dataset/test_get_releases_from_page.html', 'r') as file:
+        file_path = os.path.join(os.getcwd(), "..", "Dataset", "test_get_releases_from_page.html")
+        with open(file_path, 'r') as file:
             page = file.read()
 
         expected_num_pages = 2
