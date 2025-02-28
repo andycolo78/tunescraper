@@ -11,6 +11,12 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    env:
+      APP_ENV: test
+      SPOTIFY_CLIENT_ID: abcdef
+      SPOTIFY_CLIENT_SECRET: 1234
+      LOG_LEVEL: DEBUG
+      DEV_ENABLE: false
 
     steps:
       - name: Checkout code
