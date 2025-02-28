@@ -1,3 +1,4 @@
+pytest
 spotipy
 beautifulsoup4
 dependency_injector

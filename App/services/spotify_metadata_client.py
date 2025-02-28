@@ -29,7 +29,7 @@ class SpotifyMetadataClient(MetadataClient):
 
         self._logger.debug(f'Title : {clean_title} | Artist : {clean_artist} | q : {search_string}')
 
-        result = self._spotify.     search(q=search_string, limit=5, type="album")
+        result = self._spotify.search(q=search_string, limit=5, type="album")
         self._logger.debug(f'album search result : {result}')
 
         return self._get_album_metadata(title, artist, result)
