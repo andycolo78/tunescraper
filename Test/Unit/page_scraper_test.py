@@ -4,7 +4,6 @@ from bs4 import BeautifulSoup
 
 from App.data.release import Release
 from App.page_scrapers.page_scraper import PageScraper
-from App.parsers.release_parser import ReleaseParser
 
 from Test.Lib.mock_release_parser import MockReleaseParser
 
@@ -12,7 +11,7 @@ from Test.Lib.mock_release_parser import MockReleaseParser
 class PageScraperTest(unittest.TestCase):
 
     def test_set_page(self):
-        file_path = os.path.join(os.getcwd(), "..", "Dataset", "test_get_releases_from_page.html")
+        file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "Dataset", "test_get_releases_from_page.html")
         with open(file_path, 'r') as file:
             page = file.read()
 
@@ -22,7 +21,7 @@ class PageScraperTest(unittest.TestCase):
         self.assertIsInstance(page_scraper._soup, BeautifulSoup)
 
     def test_releases(self):
-        file_path = os.path.join(os.getcwd(), "..", "Dataset", "test_get_releases_from_page.html")
+        file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "Dataset", "test_get_releases_from_page.html")
         with open(file_path, 'r') as file:
             page = file.read()
 
@@ -49,7 +48,7 @@ class PageScraperTest(unittest.TestCase):
         self.assertEqual(expected_releases, releases)
 
     def test_num_pages(self):
-        file_path = os.path.join(os.getcwd(), "..", "Dataset", "test_get_releases_from_page.html")
+        file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "Dataset", "test_get_releases_from_page.html")
         with open(file_path, 'r') as file:
             page = file.read()
 
