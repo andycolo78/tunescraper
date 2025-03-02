@@ -1,3 +1,4 @@
+import os
 import unittest
 
 from App.data.release import Release
@@ -14,11 +15,15 @@ class TunescraperAppTest(unittest.TestCase):
 
     def test_get_releases(self):
         url = 'https://www.albumoftheyear.org/releases/this-week/'
-        with open('../Dataset/test_get_releases_from_page.html', 'r') as file:
+        file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "Dataset",
+                                 "test_get_releases_from_page.html")
+        with open(file_path, 'r') as file:
             page = file.read()
 
         url_2 = 'https://www.albumoftheyear.org/releases/this-week/2/'
-        with open('../Dataset/test_get_releases_from_page_2.html', 'r') as file:
+        file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "Dataset",
+                                 "test_get_releases_from_page_2.html")
+        with open(file_path, 'r') as file:
             page_2 = file.read()
 
         pages = {url: page, url_2: page_2}
