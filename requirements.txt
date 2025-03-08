@@ -5,4 +5,8 @@ dependency_injector
 dotenv
 undetected_chromedriver
 setuptools
+alembic==1.7.6
+sqlalchemy==1.4.25
+pymysql
+cryptography
  
