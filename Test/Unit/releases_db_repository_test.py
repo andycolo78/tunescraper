@@ -9,11 +9,11 @@ class ReleasesDbRepositoryTest(unittest.TestCase):
 
     def test_update_releases(self):
         releases = [
-            Release(author='Jamie xx', title='In Waves', type='album'),
-            Release(author='Katy Perry', title='143', type='album'),
-            Release(author='Future', title='MIXTAPE PLUTO', type='album'),
-            Release(author='The Voidz', title='Like All Before You', type='album'),
-            Release(author='The Alchemist', title='The Genuine Articulate', type='album')
+            Release(author='Jamie xx', title='In Waves', type='album',update_date='2000-01-01 00:00:00'),
+            Release(author='Katy Perry', title='143', type='album',update_date='2000-01-01 00:00:00'),
+            Release(author='Future', title='MIXTAPE PLUTO', type='album',update_date='2000-01-01 00:00:00'),
+            Release(author='The Voidz', title='Like All Before You', type='album',update_date='2000-01-01 00:00:00'),
+            Release(author='The Alchemist', title='The Genuine Articulate', type='album',update_date='2000-01-01 00:00:00')
         ]
 
         mock_db_session = MagicMock()
