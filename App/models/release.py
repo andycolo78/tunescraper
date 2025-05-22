@@ -1,6 +1,7 @@
 from sqlalchemy import Column, Integer, String, DateTime
 from App.init.database import Base
 
+
 class Release(Base):
     __tablename__ = "releases"
 

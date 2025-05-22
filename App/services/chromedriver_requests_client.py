@@ -6,7 +6,7 @@ from App.services.requests_client import RequestsClient
 class ChromedriverRequestsClient(RequestsClient):
     def __init__(self):
         options = undetected_chromedriver.ChromeOptions()
-        options.add_argument("--headless")
+        # options.add_argument("--headless")
         self._driver = undetected_chromedriver.Chrome(options)
 
     def get(self, url: str) -> str:

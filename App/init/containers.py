@@ -54,6 +54,5 @@ class ScraperContainer(containers.DeclarativeContainer):
 
     tune_scraper = providers.Factory(
         TunescraperApp,
-        releases_repository,
-        metadata_repository
+        releases_repository
     )

@@ -15,7 +15,11 @@ container = ScraperContainer()
 
 @inject
 def main(tune_scraper: TunescraperApp = Provide[ScraperContainer.tune_scraper]) -> None:
-    args = process_args()
+    parser = argparse.ArgumentParser(description="Find new music releases")
+    parser.add_argument("-o", "--output", action="store_true", help="Print results to console output")
+    parser.add_argument("-db", "--database", action="store_true", help="Save data to database")
+
+    args =  parser.parse_args()
 
     releases = tune_scraper.get_releases()
 
@@ -27,8 +31,6 @@ def main(tune_scraper: TunescraperApp = Provide[ScraperContainer.tune_scraper]) 
         for release in releases:
             print(f"{release.title[:45] + "..." if len(release.title) > 45 else release.title:-<50} "
                   f"{release.author[:40] + "..." if len(release.author) > 40 else release.author:-<50} "
-                  f"{release.url:<20}"
-                  f"{release.genres}"
                   )
         return
 

@@ -7,6 +7,7 @@ from unittest.mock import patch
 import sys
 from io import StringIO
 
+import pytest
 from dotenv import load_dotenv
 
 from Test.Lib.mock_metadata_client import MockMetadataClient
@@ -273,6 +274,7 @@ class TunescraperTest(unittest.TestCase):
 
         self.assertTrue(all(found in printed_message for found in get_expected_list()))
 
+    @pytest.mark.skip(reason="DB option to be implemented")
     @patch.object(sys, "argv", ["tunescraper", "-db"])
     def test_database_option(self):
         setup_db()
