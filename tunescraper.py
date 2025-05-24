@@ -3,6 +3,9 @@ from argparse import Namespace
 
 from App.init.containers import ScraperContainer
 from dependency_injector.wiring import Provide, inject
+
+from App.repositories.releases_db_repository import ReleasesDbRepository
+from App.repositories.releases_repository import ReleasesRepository
 from App.tunescraper_app import TunescraperApp
 
 '''
@@ -13,18 +16,26 @@ tunescraper : get the list of new music releases from websites and lists links t
 
 container = ScraperContainer()
 
-@inject
-def main(tune_scraper: TunescraperApp = Provide[ScraperContainer.tune_scraper]) -> None:
+def process_args() -> Namespace:
     parser = argparse.ArgumentParser(description="Find new music releases")
     parser.add_argument("-o", "--output", action="store_true", help="Print results to console output")
     parser.add_argument("-db", "--database", action="store_true", help="Save data to database")
 
-    args =  parser.parse_args()
+    return parser.parse_args()
 
-    releases = tune_scraper.get_releases()
+
+@inject
+def main(
+        releases_repository: ReleasesRepository = Provide[ScraperContainer.releases_repository],
+        releases_db_repository: ReleasesDbRepository = Provide[ScraperContainer.releases_db_repository],
+) -> None:
+    args = process_args()
+
+    releases = releases_repository.fetch_releases()
 
     if args.database:
-        print('Saved to DB')
+        releases_db_repository.update_releases(releases)
+        print("SAVED TO DB!")
         return
 
     if args.output:
@@ -39,10 +50,3 @@ def main(tune_scraper: TunescraperApp = Provide[ScraperContainer.tune_scraper]) 
 if __name__ == "__main__":
     container.wire(modules=[__name__])
     main()
-
-def process_args() -> Namespace:
-    parser = argparse.ArgumentParser(description="Find new music releases")
-    parser.add_argument("-o", "--output", action="store_true", help="Print results to console output")
-    parser.add_argument("-db", "--database", action="store_true", help="Save data to database")
-
-    return parser.parse_args()

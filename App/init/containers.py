@@ -1,6 +1,8 @@
 from dependency_injector import containers, providers
 
 from App.init.config import Config
+from App.init.database import SessionLocal
+from App.repositories.releases_db_repository import ReleasesDbRepository
 
 from App.tunescraper_app import TunescraperApp
 from App.page_scrapers.page_scraper import PageScraper
@@ -38,6 +40,13 @@ class ScraperContainer(containers.DeclarativeContainer):
         AotyConfig.URL,
         page_scraper,
         request_client
+    )
+
+    session = providers.Factory(SessionLocal)
+
+    releases_db_repository = providers.Singleton(
+        ReleasesDbRepository,
+        session
     )
 
     metadata_client = providers.Singleton(
