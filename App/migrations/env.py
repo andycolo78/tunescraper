@@ -16,17 +16,12 @@ config = context.config
 
 DATABASE = {
     'drivername': Config.DB_DRIVER,
-    'database': Config.DB_NAME
+    'database': Config.DB_NAME,
+    'username': Config.DB_USER,
+    'password': Config.DB_PASSWORD,
+    'host': Config.DB_HOST,
+    'port': Config.DB_PORT
 }
-
-if len(Config.DB_USER) > 0 :
-    DATABASE['username'] = Config.DB_USER
-if len(Config.DB_PASSWORD) > 0 :
-    DATABASE['password'] = Config.DB_PASSWORD
-if len(Config.DB_HOST) > 0 :
-    DATABASE['host'] = Config.DB_HOST
-if len(Config.DB_PORT) > 0 :
-    DATABASE['port'] = Config.DB_PORT
 
 config.set_main_option("sqlalchemy.url", str(URL.create(**DATABASE)))
 
