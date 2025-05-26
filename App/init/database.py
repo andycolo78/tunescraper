@@ -8,17 +8,12 @@ from App.init.config import Config
 
 DATABASE = {
     'drivername': Config.DB_DRIVER,
-    'database': Config.DB_NAME
+    'database': Config.DB_NAME,
+    'username': Config.DB_USER if Config.DB_USER else '',
+    'password': Config.DB_PASSWORD if Config.DB_PASSWORD else '',
+    'host': Config.DB_HOST if Config.DB_HOST else '',
+    'port': Config.DB_PORT if Config.DB_PORT else ''
 }
-
-if Config.DB_USER :
-    DATABASE['username'] = Config.DB_USER
-if Config.DB_PASSWORD :
-    DATABASE['password'] = Config.DB_PASSWORD
-if Config.DB_HOST :
-    DATABASE['host'] = Config.DB_HOST
-if Config.DB_PORT :
-    DATABASE['port'] = Config.DB_PORT
 
 # Replace with your actual MySQL database URL
 DATABASE_URL = str(URL.create(**DATABASE))
