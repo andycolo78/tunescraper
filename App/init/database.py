@@ -11,13 +11,13 @@ DATABASE = {
     'database': Config.DB_NAME
 }
 
-if len(Config.DB_USER) > 0 :
+if Config.DB_USER :
     DATABASE['username'] = Config.DB_USER
-if len(Config.DB_PASSWORD) > 0 :
+if Config.DB_PASSWORD :
     DATABASE['password'] = Config.DB_PASSWORD
-if len(Config.DB_HOST) > 0 :
+if Config.DB_HOST :
     DATABASE['host'] = Config.DB_HOST
-if len(Config.DB_PORT) > 0 :
+if Config.DB_PORT :
     DATABASE['port'] = Config.DB_PORT
 
 # Replace with your actual MySQL database URL
