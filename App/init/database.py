@@ -7,8 +7,8 @@ from App.init.config import Config
 
 
 DATABASE = {
-    'drivername': Config.DB_DRIVER,
-    'database': Config.DB_NAME,
+    'drivername': Config.DB_DRIVER if Config.DB_DRIVER else '',
+    'database': Config.DB_NAME if Config.DB_NAME else '',
     'username': Config.DB_USER if Config.DB_USER else '',
     'password': Config.DB_PASSWORD if Config.DB_PASSWORD else '',
     'host': Config.DB_HOST if Config.DB_HOST else '',
