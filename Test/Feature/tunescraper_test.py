@@ -1,16 +1,12 @@
 import os
 import unittest
-import subprocess
 
-from unittest.mock import MagicMock
 from unittest.mock import patch
 import sys
 from io import StringIO
 
-import pytest
 from dotenv import load_dotenv
 
-from Test.Lib.mock_metadata_client import MockMetadataClient
 from Test.Lib.mock_requests_client import MockRequestsClient
 
 from dependency_injector import providers
@@ -59,7 +55,7 @@ class TunescraperTest(unittest.TestCase):
     @patch.object(sys, "argv", ["tunescraper", "-o"])
     def test_output_option(self, stdout):
         from tunescraper import main
-        from App.init.containers import ScraperContainer
+        from App.init.containers.scraper_container import ScraperContainer
 
         container = ScraperContainer()
         container.request_client.override(providers.Singleton(MockRequestsClient, mock_request_client_response()))
@@ -75,7 +71,7 @@ class TunescraperTest(unittest.TestCase):
     def test_database_option(self):
         setup_db()
         from tunescraper import main
-        from App.init.containers import ScraperContainer
+        from App.init.containers.scraper_container import ScraperContainer
 
         container = ScraperContainer()
         container.request_client.override(providers.Singleton(MockRequestsClient, mock_request_client_response()))

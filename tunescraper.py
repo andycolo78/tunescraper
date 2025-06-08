@@ -1,12 +1,11 @@
 import argparse
 from argparse import Namespace
 
-from App.init.containers import ScraperContainer
+from App.init.containers.scraper_container import ScraperContainer
 from dependency_injector.wiring import Provide, inject
 
 from App.repositories.releases_db_repository import ReleasesDbRepository
 from App.repositories.releases_repository import ReleasesRepository
-from App.tunescraper_app import TunescraperApp
 
 '''
 tunescraper : get the list of new music releases from websites and lists links to spotify
